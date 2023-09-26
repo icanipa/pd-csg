@@ -1,5 +1,5 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import serviceReducer from '../reducers/services/services.reducer';
+import {serviceReducer} from '../reducers/services/services.reducer';
 import logger from 'redux-logger'
 
 

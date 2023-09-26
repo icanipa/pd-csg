@@ -4,17 +4,23 @@ import { fetchServicesData } from "./services.actions";
 
 interface ServicesState {
     services: Services[];
+    selectedService: Services | null;
 }
 
 const initialState: ServicesState = {
     services: [],
+    selectedService: null,
 }
 
 
 const serviceSlice = createSlice({
-    name:"service",
+    name:"services",
     initialState,
-    reducers:{
+    reducers: {
+        setSelectService: (state, action) => ({
+            ...state,
+            selectedService: action.payload
+        })
     },
     extraReducers: (builder) => {
         builder.addCase(fetchServicesData.pending, (state) => ({
@@ -32,4 +38,5 @@ const serviceSlice = createSlice({
     }
 });
 
-export default serviceSlice.reducer
+export const serviceReducer = serviceSlice.reducer
+export const serviceAction = serviceSlice.actions

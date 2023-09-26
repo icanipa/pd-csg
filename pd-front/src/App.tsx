@@ -1,26 +1,17 @@
-import { useEffect } from 'react'
-import ServicesTable from './components/services-table/services-table'
-import { useAppDispatch } from './store/hooks'
-import { fetchServicesData } from './reducers/services/services.actions'
-import { selectServices } from './reducers/services/services.selectors'
+import {Routes, Route} from 'react-router-dom'
+import Naviagtion from './routes/navigation/navigation.component'
+import Home from './routes/home/home.component'
+import ServicePage from './routes/service-page/service-page.component'
 import './App.css'
-import { useSelector } from 'react-redux'
 
 function App() {
-  const dispatch = useAppDispatch();
-  const services = useSelector(selectServices);
-  useEffect(()=>{
-    dispatch(fetchServicesData())
-  },[])
   return (
-    <>
-      <div>
-        <h1> PagerDuty Customer Success Group</h1>
-        <div className='service-table'>
-          <ServicesTable services={services}/>
-        </div>
-      </div>
-    </>
+    <Routes>
+      <Route path='/' element={<Naviagtion />} >
+        <Route index  element={<Home />} />
+        <Route path='service' element={<ServicePage />} />
+      </Route>
+    </Routes>
   )
 }
 
