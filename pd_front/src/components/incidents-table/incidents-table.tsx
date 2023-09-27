@@ -1,19 +1,38 @@
+import { Incidents } from "../../utils/types"
 
-const IncidentsTable = () => {
+interface Props {
+    incidents: Incidents[]
+}
+
+const IncidentsTable = ({incidents}: Props) => {
     return(
         <table width={'100%'} >
             <thead>
                 <tr className="service-table-header">
                     <th>STATUS</th>
-                    <th>PRIORITY</th>
+                    <th>TITLE</th>
                     <th>URGENCY</th>
-                    <th>ALERTS</th>
                     <th>ASSIGNED TO</th>
                     <th>CREATED</th>
                 </tr>
             </thead>
             <tbody>
-
+            {
+                    
+                incidents.map((incident) => {
+                    const assigned = incident.assignments ? incident.assignments[0].assignee.summary: null
+                    const createdDate= new Date(incident.created_at)
+                    return(
+                        <tr key={incident.id}>
+                            <td>{incident.status}</td>
+                            <td>{incident.title}</td>
+                            <td>{incident.urgency}</td>
+                            <td>{assigned}</td>
+                            <td>{createdDate.toDateString()}</td>
+                        </tr>
+                    )
+                })
+            }
             </tbody>
         </table>
     )

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Services } from "../../utils/types";
-import { fetchServicesData } from "./services.actions";
+import { fetchServicesData, fetchServiceData } from "./services.actions";
 
 interface ServicesState {
     services: Services[];
@@ -34,7 +34,20 @@ const serviceSlice = createSlice({
         builder.addCase(fetchServicesData.fulfilled, (state, action)=> ({
             ...state,
             services: action.payload
+        })),
+        builder.addCase(fetchServiceData.pending,(state) => ({
+            ...state,
+            selectedService: null
+        })),
+        builder.addCase(fetchServiceData.rejected,(state) => ({
+            ...state,
+            selectedService: null
+        })),
+        builder.addCase(fetchServiceData.fulfilled,(state, action) => ({
+            ...state,
+            selectedService: action.payload 
         }))
+
     }
 });
 

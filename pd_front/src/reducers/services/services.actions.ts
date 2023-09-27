@@ -9,4 +9,10 @@ export const fetchServicesData = createAsyncThunk<Services[]>(
     ServiceAPI.getAll
 );
 
+export const fetchServiceData = createAsyncThunk<Services, string | undefined>(
+    'services/fetchService',
+    ServiceAPI.getById
+
+)
+
 export const setSelectedService = serviceAction.setSelectService

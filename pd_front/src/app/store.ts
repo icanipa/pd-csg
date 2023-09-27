@@ -1,11 +1,13 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import {serviceReducer} from '../reducers/services/services.reducer';
+import { serviceReducer } from '../reducers/services/services.reducer';
+import { incidentsReducer } from '../reducers/incidents/incidents.reducer';
 import logger from 'redux-logger'
 
 
 export const store = configureStore({
     reducer: {
-      service: serviceReducer
+      service: serviceReducer,
+      incidents: incidentsReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

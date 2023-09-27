@@ -3,12 +3,14 @@ import { setSelectedService } from "../../reducers/services/services.actions"
 import { useAppDispatch } from "../../app/hooks"
 import { useNavigate} from 'react-router-dom'
 import './services-table.style.css'
+
 interface Props {
     services: Services[]
 }
 const ServicesTable = ({services}: Props) => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+
     const handleSelectService = (service: Services) => {
         dispatch(setSelectedService(service))
         navigate(`/service/${service.id}`)
