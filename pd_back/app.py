@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
+from flask_cors import CORS
 from dotenv import load_dotenv
-from controllers.services import get_all_services
+from controllers.services import get_all_services, get_service_by_id
 from controllers.incidents import get_incidents_by_service, get_incident_by_id ,get_all_incidents
 import os
 load_dotenv()
@@ -8,6 +9,7 @@ load_dotenv()
 PORT = int(os.environ.get('PORT', 5000))
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/")
 def health():
@@ -17,6 +19,11 @@ def health():
 def services():
     services = get_all_services()
     return services
+
+@app.route("/services/<id>")
+def service_by_id(id):
+    service = get_service_by_id(id)
+    return service
 
 @app.route("/incidents")
 def incidents():
