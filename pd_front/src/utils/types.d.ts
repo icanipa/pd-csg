@@ -83,3 +83,6 @@ export interface Services {
     type: string;
   }
   
+  export interface IncidentsData extends Incidents {
+    assigned: string
+}

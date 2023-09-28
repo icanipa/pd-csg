@@ -1,12 +1,15 @@
 import { useState } from "react"
 import { Incidents } from "../../utils/types"
-import Modal from "../modal/modal"
+import ModalDetails from "../modal-details/modal-details"
+import { IncidentsData } from "../../utils/types"
 
 interface Props {
     incidents: Incidents[]
 }
-const defaultIncident: Incidents = {
-    assignments: [],
+
+const defaultIncident: IncidentsData = {
+    assignments: [] ,
+    assigned: '',
     created_at: '',
     description: '',
     service: {
@@ -28,11 +31,11 @@ const defaultIncident: Incidents = {
 
 const IncidentsTable = ({incidents}: Props) => {
     const [openModal, setOpenModal] = useState<boolean>(false);
-    const [incidentData, setIncidentData] = useState<Incidents>(defaultIncident)
+    const [incidentData, setIncidentData] = useState<IncidentsData>(defaultIncident)
     const handleClodeModal = () => {
         setOpenModal(false)
     }
-    const handleModalData = (incident: Incidents) => {
+    const handleModalData = (incident: IncidentsData) => {
         setOpenModal(!openModal)
         setIncidentData(incident)
     }
@@ -43,9 +46,9 @@ const IncidentsTable = ({incidents}: Props) => {
                 <tr className="service-table-header">
                     <th>STATUS</th>
                     <th>TITLE</th>
-                    <th>URGENCY</th>
                     <th>ASSIGNED TO</th>
                     <th>CREATED</th>
+                    <th>EDIT</th>
                 </tr>
             </thead>
             <tbody>
@@ -53,18 +56,20 @@ const IncidentsTable = ({incidents}: Props) => {
                     
                 incidents.map((incident) => {
                     const assigned = incident.assignments.length !== 0 ? incident.assignments[0].assignee.summary: '-'
+                    const incidentDetails = {...incident, assigned: assigned}
+                    
                     const createdDate= new Date(incident.created_at)
                     return(
                         <tr key={incident.id}>
                             <td>
-                                <span onClick={() => handleModalData(incident)}>
+                                <span onClick={() => handleModalData(incidentDetails)}>
                                     {incident.status}
                                 </span>
                             </td>
                             <td>{incident.title}</td>
-                            <td>{incident.urgency}</td>
                             <td>{assigned}</td>
                             <td>{createdDate.toDateString()}</td>
+                            <td><button>Update</button></td>
                         </tr>
                     )
                 })
@@ -72,7 +77,9 @@ const IncidentsTable = ({incidents}: Props) => {
             </tbody>
         </table>
         {
-            openModal ? <Modal onClose={handleClodeModal} incident={incidentData}/> : null
+            openModal && (
+                <ModalDetails onClose={handleClodeModal} incidents={incidentData} modalTitle='Incident details'/>
+            ) 
         }
         </>
     )
