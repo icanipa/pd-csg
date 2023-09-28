@@ -50,34 +50,20 @@ export interface Services {
   }
   
   export interface Incidents {
-    acknowledgements?: (null)[] | null;
-    alert_counts: AlertCounts;
-    alert_grouping?: null;
-    assigned_via: string;
     assignments: (Assignments)[] | [];
     basic_alert_grouping?: null;
     created_at: string;
     description: string;
-    escalation_policy: Assignee;
-    first_trigger_log_entry: [];
     html_url: string;
     id: string;
-    incident_key: string;
-    incident_number: number;
-    incidents_responders?: (null)[] | null;
-    is_mergeable: boolean;
-    last_status_change_at: string;
-    last_status_change_by: Assignee;
-    pending_actions?: (null)[] | null;
-    priority?: null;
+    last_status_change_at?: string;
+    priority?: {} | null;
     resolved_at?: null;
     responder_requests?: (null)[] | null;
-    self: string;
-    service:Assignee;
+    self?: string;
+    service: Assignee;
     status: string;
-    subscriber_requests?: (null)[] | null;
     summary: string;
-    teams?: (null)[] | null;
     title: string;
     type: string;
     updated_at: string;

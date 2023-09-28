@@ -1,11 +1,43 @@
+import { useState } from "react"
 import { Incidents } from "../../utils/types"
+import Modal from "../modal/modal"
 
 interface Props {
     incidents: Incidents[]
 }
+const defaultIncident: Incidents = {
+    assignments: [],
+    created_at: '',
+    description: '',
+    service: {
+        html_url:'',
+        id: '',
+        self: '',
+        summary:'',
+        type:''
+    },
+    html_url: '',
+    id: '',
+    status: '',
+    summary: '',
+    title: '',
+    type: '',
+    updated_at: '',
+    urgency:''
+}
 
 const IncidentsTable = ({incidents}: Props) => {
+    const [openModal, setOpenModal] = useState<boolean>(false);
+    const [incidentData, setIncidentData] = useState<Incidents>(defaultIncident)
+    const handleClodeModal = () => {
+        setOpenModal(false)
+    }
+    const handleModalData = (incident: Incidents) => {
+        setOpenModal(!openModal)
+        setIncidentData(incident)
+    }
     return(
+        <>
         <table width={'100%'} >
             <thead>
                 <tr className="service-table-header">
@@ -24,7 +56,11 @@ const IncidentsTable = ({incidents}: Props) => {
                     const createdDate= new Date(incident.created_at)
                     return(
                         <tr key={incident.id}>
-                            <td>{incident.status}</td>
+                            <td>
+                                <span onClick={() => handleModalData(incident)}>
+                                    {incident.status}
+                                </span>
+                            </td>
                             <td>{incident.title}</td>
                             <td>{incident.urgency}</td>
                             <td>{assigned}</td>
@@ -35,6 +71,10 @@ const IncidentsTable = ({incidents}: Props) => {
             }
             </tbody>
         </table>
+        {
+            openModal ? <Modal onClose={handleClodeModal} incident={incidentData}/> : null
+        }
+        </>
     )
 } 
 
