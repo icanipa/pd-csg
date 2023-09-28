@@ -6,7 +6,7 @@ import './services-table.style.css'
 
 interface Props {
     services: Services[]
-}
+} 
 const ServicesTable = ({services}: Props) => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -31,13 +31,13 @@ const ServicesTable = ({services}: Props) => {
                         return(
                             <tr key={service.id}>
                                 <td>
-                                    <span onClick={()=>handleSelectService(service)}>
+                                    <span onClick={() => handleSelectService(service)}>
                                         {service.name}
                                     </span>
                                 </td>
                                 <td>{service.status}</td>
                                 <td>{service.last_incident_timestamp}</td>
-                                <td><button>Incidents</button></td>
+                                <td><button onClick={() => handleSelectService(service)}>Incidents</button></td>
                             </tr>
                         )
                     })

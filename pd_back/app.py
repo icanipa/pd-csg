@@ -14,7 +14,7 @@ CORS(app)
 @app.route("/")
 def health():
     return jsonify("healthy")
-
+# servieces APIs
 @app.route("/services")
 def services():
     services = get_all_services()
@@ -25,9 +25,16 @@ def service_by_id(id):
     service = get_service_by_id(id)
     return service
 
+
+# incidents APIs
 @app.route("/incidents")
 def incidents():
     incident = get_all_incidents()
+    return incident
+
+@app.route("/incidents/<id>")
+def incident_by_id(id):
+    incident = get_incident_by_id(id)
     return incident
 
 @app.route("/incidents/service/<id>")
@@ -35,10 +42,6 @@ def incidents_by_service_id(id):
     incidents = get_incidents_by_service(id)
     return incidents
 
-@app.route("/incidents/<id>")
-def incident_by_id(id):
-    incident = get_incident_by_id(id)
-    return incident
 
 
 if __name__ == '__main__':

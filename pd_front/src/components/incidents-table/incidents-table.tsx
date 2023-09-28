@@ -20,7 +20,7 @@ const IncidentsTable = ({incidents}: Props) => {
             {
                     
                 incidents.map((incident) => {
-                    const assigned = incident.assignments ? incident.assignments[0].assignee.summary: null
+                    const assigned = incident.assignments.length !== 0 ? incident.assignments[0].assignee.summary: '-'
                     const createdDate= new Date(incident.created_at)
                     return(
                         <tr key={incident.id}>

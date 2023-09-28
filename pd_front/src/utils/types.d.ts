@@ -17,7 +17,7 @@ export interface Services {
     id: string;
     incident_urgency_rule: IncidentUrgencyRule;
     integrations?: (null)[] | null;
-    last_incident_timestamp?: string | null;
+    last_incident_timestamp: string | null;
     name: string;
     response_play?: null;
     scheduled_actions?: (null)[] | null;
@@ -54,7 +54,7 @@ export interface Services {
     alert_counts: AlertCounts;
     alert_grouping?: null;
     assigned_via: string;
-    assignments?: (Assignments)[] | null;
+    assignments: (Assignments)[] | [];
     basic_alert_grouping?: null;
     created_at: string;
     description: string;
