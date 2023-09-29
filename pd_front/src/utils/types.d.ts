@@ -28,7 +28,7 @@ export interface Services {
     teams?: (null)[] | null;
     type: string;
     updated_at: string;
-  }
+}
   export interface AlertGroupingParameters {
     config?: Config | null;
     type?: string | null;
@@ -75,14 +75,22 @@ export interface Services {
     at: string;
   }
 
-  export interface Assignee{
+export interface Assignee{
     html_url: string;
     id: string;
     self: string;
     summary: string;
     type: string;
-  }
+}
   
-  export interface IncidentsData extends Incidents {
+export interface IncidentsData extends Incidents {
     assigned: string
+}
+
+export interface UpdateBody {
+  id: string;
+  status: string;
+  title: string;
+  type: string;
+  urgency: string;
 }
