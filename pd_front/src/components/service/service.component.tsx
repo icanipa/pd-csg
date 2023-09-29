@@ -13,7 +13,7 @@ interface Props {
 const Service = ({service} : Props) => {
     const dispatch = useAppDispatch();
     const incidents = useAppSelector(selectIncidents)
-    const id = service ? service.id : ''
+    const id = service && service.id
     useEffect(()=>{
         if(id){
             dispatch(fetchIncidentsData(id))

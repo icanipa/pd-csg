@@ -4,13 +4,13 @@ import { IncidentsData } from "../../utils/types"
 
 interface Props {
     onClose: () => void,
-    incidents: IncidentsData,
+    incident: IncidentsData,
     modalTitle: string
 }
-const ModalDetails = ({ onClose, incidents, modalTitle }: Props) => {
-    const {service, title, urgency, created_at, assigned, status, id } = incidents;
+const ModalDetails = ({ onClose, incident, modalTitle }: Props) => {
+    const {service, title, urgency, created_at, assigned, status, id } = incident;
     return (
-        <Modal>
+        <Modal >
             <Modal.Header>
                 <h3>{modalTitle}</h3>
                 <span className="close-form" onClick={() => onClose()}>
