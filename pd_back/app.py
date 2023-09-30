@@ -7,7 +7,8 @@ from controllers.incidents import (
     get_incidents_by_service, 
     get_incident_by_id,
     get_all_incidents, 
-    put_incident_by_id
+    put_incident_by_id,
+    create_incident_by_id
 )
 import os
 load_dotenv()
@@ -20,6 +21,7 @@ CORS(app)
 @app.route("/")
 def health():
     return jsonify("healthy")
+
 # servieces APIs
 @app.route("/services")
 def services():
@@ -31,30 +33,32 @@ def service_by_id(id):
     service = get_service_by_id(id)
     return service
 
-
 # incidents APIs
+@app.route("/incident", methods= ['PUT', 'POST'])
+def indicent():
+    body = request.get_json()
+    if request.method == 'POST':
+        new_incident = create_incident_by_id(body)
+        return new_incident
+    else: 
+        incident = put_incident_by_id(body)
+        return incident
+    
+@app.route("/incident/<id>")
+def incident_by_id(id):
+    incident = get_incident_by_id(id)
+    return incident
+
 @app.route("/incidents")
 def incidents():
     incident = get_all_incidents()
     return incident
-
-@app.route("/incidents/<id>", methods=['GET', 'PUT'])
-def incident_by_id(id):
-    if request.method == 'GET':
-        incident = get_incident_by_id(id)
-        return incident
-    else:
-        body = request.get_json()
-        incident = put_incident_by_id(body)
-        return incident
-
 
 
 @app.route("/incidents/service/<id>")
 def incidents_by_service_id(id):
     incidents = get_incidents_by_service(id)
     return incidents
-
 
 
 if __name__ == '__main__':

@@ -1,15 +1,16 @@
-import { useState, ChangeEvent, FormEvent, useEffect } from "react";
-import Modal from "../modal/modal";
 import _ from "lodash";
+import { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import Modal from "../modal/modal";
 import FormInput from "../modal/form-input/form-input";
-import { IncidentsData } from "../../utils/types";
 import FormSelect from "../modal/form-select/form-select";
+import { IncidentsData } from "../../utils/types";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { fetchUpdateData } from "../../reducers/incidents/incidents.actions";
 import { selectUpdate } from "../../reducers/incidents/incidents.selectors";
-import { setUpdateIncident } from "../../reducers/incidents/incidents.actions"; 
-import { useParams } from "react-router-dom";
+import { setUpdateIncident } from "../../reducers/incidents/incidents.actions";
 import { fetchServiceData } from "../../reducers/services/services.actions";
+
 interface Props {
     modalTitle: string
     incident: IncidentsData,
@@ -23,19 +24,18 @@ const ModalUpdate = ({ update, modalTitle, onClose, incident }: Props) => {
     const [formFields, setFormFields] = useState(incident);
     const serviceParams = useParams()
     const { title, status, id, service, created_at, assigned, urgency, type } = formFields;
-    console.log(incident, formFields)
-    console.log(_.isEqual(incident,formFields))
-    useEffect (()=>{
-        if(isUpdated){
+
+    useEffect(() => {
+        if (isUpdated) {
             alert("Incident Update Correct")
             dispatch(setUpdateIncident(false))
             dispatch(fetchServiceData(serviceParams.id))
             onClose();
         }
-    },[isUpdated])
+    }, [isUpdated])
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-        const body = {id, type, status, title, urgency }
+        const body = { id, type, status, title, urgency }
         event.preventDefault()
         dispatch(fetchUpdateData(body))
     }
@@ -67,13 +67,13 @@ const ModalUpdate = ({ update, modalTitle, onClose, incident }: Props) => {
                     name='id'
                     defaultValue={id}
                 />
-                <FormSelect 
+                <FormSelect
                     label='Status'
                     name='status'
                     disabled={!update}
                     value={status}
                     onChange={handleChange}
-                    options={['resolved', 'acknowledged']}
+                    options={['triggered','resolved', 'acknowledged']}
                 />
                 <FormInput
                     label='Title'
@@ -96,7 +96,7 @@ const ModalUpdate = ({ update, modalTitle, onClose, incident }: Props) => {
                     disabled={!update}
                     value={type}
                     onChange={handleChange}
-                    options={['incident', 'incident_reference']} 
+                    options={['incident', 'incident_reference']}
                 />
                 <FormInput
                     label='Assigned'
@@ -107,17 +107,17 @@ const ModalUpdate = ({ update, modalTitle, onClose, incident }: Props) => {
                 />
                 <FormSelect
                     label='Urgency'
-                    disabled= {!update}
+                    disabled={!update}
                     name='urgency'
                     value={urgency}
                     onChange={handleChange}
-                    options= {['high', 'low']}
+                    options={['high', 'low']}
                 />
             </Modal.Body>
             <Modal.Footer>{
-                    update &&
-                    <button type='submit' disabled={_.isEqual(incident,formFields)}>update</button>
-                }
+                update &&
+                <button type='submit' disabled={_.isEqual(incident, formFields)}>update</button>
+            }
                 <button type='button' onClick={() => onClose()}>close</button>
             </Modal.Footer>
         </Modal>

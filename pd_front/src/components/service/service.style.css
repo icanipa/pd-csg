@@ -1,7 +1,21 @@
 .service-container{
     text-align: left;
     margin-left: 5%;
+    display: flex;
+    flex-direction: column;
 }
 .service-container p{
     text-align: justify;
+}
+.service-incident-button-contianer{
+    display: flex;
+    justify-content: end;
+    margin-bottom: 30px;
+}
+.service-incident-button{
+    padding: 10px;
+    background-color: #1155E6;
+    color: #FFF;
+    width: 200px;
+
 }

@@ -30,3 +30,7 @@ def put(path, body):
         'urgency' : body['urgency']
     }}
     return requests.put(url_api, headers=headers, json=payload)
+
+def post(path, body):
+    url_api = url + path
+    return requests.post(url_api, headers=headers, json=body)

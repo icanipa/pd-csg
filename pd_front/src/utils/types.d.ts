@@ -94,3 +94,17 @@ export interface UpdateBody {
   type: string;
   urgency: string;
 }
+
+export interface defaultPostFields {
+  type: string,
+  title: string,
+  service: {
+      id?: string,
+      type: string
+  },
+  urgency: string
+}
+
+export interface BodyPost {
+  incident: defaultPostFields
+}

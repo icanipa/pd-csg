@@ -16,3 +16,7 @@ def put_incident_by_id(body):
     id = body.pop('id')
     response = api_pdpyras.put(f'incidents/{id}', body)
     return response.json()
+
+def create_incident_by_id(body):
+    response = api_pdpyras.post(f'incidents', body)
+    return response.json()

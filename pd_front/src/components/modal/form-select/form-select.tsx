@@ -13,12 +13,17 @@ const FormSelect = ({ label, options, value, ...otherProps }: Props & SelectHTML
         <>
             <label>{`${label}: `}</label>
             <select key={1} value={value} {...otherProps}>
-                <option key='default' disabled value="triggered" >triggered</option>
+                <option key='default' disabled value="" >Select Value</option>
                 {
                     options.map(option => {
 
                         return (
-                            <option key={option} value={option}>{option}</option>
+                            <option 
+                                key={option} 
+                                disabled={option=='triggered'} 
+                                value={option}>
+                                    {option}
+                            </option>
                         )
                     })
                 }

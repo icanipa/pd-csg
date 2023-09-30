@@ -8,16 +8,16 @@ interface Props {
 }
 
 const defaultIncident: IncidentsData = {
-    assignments: [] ,
+    assignments: [],
     assigned: '',
     created_at: '',
     description: '',
     service: {
-        html_url:'',
+        html_url: '',
         id: '',
         self: '',
-        summary:'',
-        type:''
+        summary: '',
+        type: ''
     },
     html_url: '',
     id: '',
@@ -26,13 +26,13 @@ const defaultIncident: IncidentsData = {
     title: '',
     type: '',
     updated_at: '',
-    urgency:''
+    urgency: ''
 }
 
-const IncidentsTable = ({incidents}: Props) => {
+const IncidentsTable = ({ incidents }: Props) => {
     const [openModal, setOpenModal] = useState<boolean>(false);
     const [update, setUpdate] = useState<boolean>(false);
-    
+
     const [incidentData, setIncidentData] = useState<IncidentsData>(defaultIncident)
 
     const handleCloseModal = () => {
@@ -49,54 +49,54 @@ const IncidentsTable = ({incidents}: Props) => {
         setOpenModal(true)
     }
 
-    return(
-        <>
-        <table width={'100%'} >
-            <thead>
-                <tr className="service-table-header">
-                    <th>STATUS</th>
-                    <th>TITLE</th>
-                    <th>ASSIGNED TO</th>
-                    <th>CREATED</th>
-                    <th>EDIT</th>
-                </tr>
-            </thead>
-            <tbody>
+    return (
+        <div className="incident-service-container">
+            <table width={'100%'} >
+                <thead>
+                    <tr className="service-table-header">
+                        <th>STATUS</th>
+                        <th>TITLE</th>
+                        <th>ASSIGNED TO</th>
+                        <th>CREATED</th>
+                        <th>EDIT</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+
+                        incidents.map((incident) => {
+                            const assigned = incident.assignments.length !== 0 ? incident.assignments[0].assignee.summary : '-'
+                            const incidentDetails = { ...incident, assigned: assigned }
+                            const createdDate = new Date(incident.created_at)
+                            return (
+                                <tr key={incident.id}>
+                                    <td>
+                                        <a onClick={() => handleModalData(incidentDetails)}>
+                                            {incident.status}
+                                        </a>
+                                    </td>
+                                    <td>{incident.title}</td>
+                                    <td>{assigned}</td>
+                                    <td>{createdDate.toDateString()}</td>
+                                    <td><button onClick={() => handleModalUpdate(incidentDetails)} >Update</button></td>
+                                </tr>
+                            )
+                        })
+                    }
+                </tbody>
+            </table>
             {
-                    
-                incidents.map((incident) => {
-                    const assigned = incident.assignments.length !== 0 ? incident.assignments[0].assignee.summary: '-'
-                    const incidentDetails = {...incident, assigned: assigned}
-                    const createdDate= new Date(incident.created_at)
-                    return(
-                        <tr key={incident.id}>
-                            <td>
-                                <a onClick={() => handleModalData(incidentDetails)}>
-                                    {incident.status}
-                                </a>
-                            </td>
-                            <td>{incident.title}</td>
-                            <td>{assigned}</td>
-                            <td>{createdDate.toDateString()}</td>
-                            <td><button onClick={()=> handleModalUpdate(incidentDetails)} >Update</button></td>
-                        </tr>
-                    )
-                })
+                openModal && (
+                    <ModalUpdate
+                        update={update}
+                        onClose={handleCloseModal}
+                        incident={incidentData}
+                        modalTitle={update ? 'Update Incident' : 'Incident Details'}
+                    />
+                )
             }
-            </tbody>
-        </table>
-        {
-            openModal && (
-                <ModalUpdate 
-                    update={update}
-                    onClose={handleCloseModal} 
-                    incident={incidentData} 
-                    modalTitle={update ? 'Update Incident' : 'Incident Details'}
-                />
-            ) 
-        }
-        </>
+        </div>
     )
-} 
+}
 
 export default IncidentsTable
