@@ -1,3 +1,4 @@
+import os
 from flask import Flask, jsonify
 from flask_cors import CORS
 from flask import request
@@ -10,7 +11,8 @@ from controllers.incidents import (
     put_incident_by_id,
     create_incident_by_id
 )
-import os
+from utils.status import calculate_status
+
 load_dotenv()
 
 PORT = int(os.environ.get('PORT', 5000))
@@ -22,18 +24,25 @@ CORS(app)
 def health():
     return jsonify("healthy")
 
-# servieces APIs
+# Get all services 
 @app.route("/services")
 def services():
     services = get_all_services()
     return services
 
-@app.route("/services/<id>")
-def service_by_id(id):
-    service = get_service_by_id(id)
-    return service
+# get all incidents per Service
+@app.route("/incidents/service/<id>")
+def incidents_by_service_id(id):
+    incidents = get_incidents_by_service(id)
+    return incidents
 
-# incidents APIs
+# get all status per incident
+@app.route("/incident/<id>")
+def incident_by_id(id):
+    incident = get_incident_by_id(id)
+    return incident
+
+# Create and Change incidents
 @app.route("/incident", methods= ['PUT', 'POST'])
 def indicent():
     body = request.get_json()
@@ -43,22 +52,26 @@ def indicent():
     else: 
         incident = put_incident_by_id(body)
         return incident
-    
-@app.route("/incident/<id>")
-def incident_by_id(id):
-    incident = get_incident_by_id(id)
-    return incident
 
+# get status of all incidents associated with a service
+@app.route("/services/status/<id>")
+def service_status(id):
+    incidents = get_incidents_by_service(id)
+    total, perc = calculate_status(incidents )
+    res = {'total': total, 'percentage': perc}
+    return res
+
+# front end helpers
+@app.route("/services/<id>")
+def service_by_id(id):
+    service = get_service_by_id(id)
+    return service
+
+    
 @app.route("/incidents")
 def incidents():
     incident = get_all_incidents()
     return incident
-
-
-@app.route("/incidents/service/<id>")
-def incidents_by_service_id(id):
-    incidents = get_incidents_by_service(id)
-    return incidents
 
 
 if __name__ == '__main__':

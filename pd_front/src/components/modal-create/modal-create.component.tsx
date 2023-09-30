@@ -33,10 +33,10 @@ const ModalCreate = ({ onClose, modalTitle, service }: Props) => {
 
     useEffect(()=> {
         if(isUpdated){
-            alert('Incident Created!!')
+            onClose()
             dispatch(setCreateIncident(false))
             dispatch(fetchServiceData(service?.id))
-            onClose()
+            alert('Incident Created!!')
         }
     }, [isUpdated])
 
@@ -47,7 +47,7 @@ const ModalCreate = ({ onClose, modalTitle, service }: Props) => {
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         const body = { incident: { ...formFields } }
-        dispatch(fetchCreateData(body))   
+        dispatch(fetchCreateData(body))
     }
 
     return (

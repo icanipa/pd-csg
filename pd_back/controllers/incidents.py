@@ -5,7 +5,7 @@ def get_all_incidents():
     return response.json()
 
 def get_incidents_by_service(service_id):
-    response = api_pdpyras.get('incidents', params={'service_ids[]': [service_id]})
+    response = api_pdpyras.get('incidents', params={'service_ids[]': [service_id],'total': True})
     return response.json()
 
 def get_incident_by_id(id):

@@ -11,7 +11,7 @@ interface Props {
     service: Services | null,
 }
 
-const Service = ({service} : Props) => {
+const Service = ({ service }: Props) => {
     const [openModal, setOpenModal] = useState(false)
     const dispatch = useAppDispatch();
     const incidents = useAppSelector(selectIncidents)
@@ -23,24 +23,26 @@ const Service = ({service} : Props) => {
     const handelOpenModal = () => {
         setOpenModal(true)
     }
-    useEffect(()=>{
-        if(id){
+    useEffect(() => {
+        if (id) {
             dispatch(fetchIncidentsData(id))
         }
-    },[id])
+    }, [id])
     return (
         <>
             <div className="service-container">
-                <h2>{`Service: ${service?.name}`}</h2>
+                <h2>{`Service: ${service ? service.name : ''}`}</h2>
                 <p>{service?.description}</p>
+                <p><strong>Id: </strong>{service?.id}</p>
+                <p><strong>Status: </strong>{service?.status}</p>
                 <div className="service-incident-button-contianer">
                     <button className="service-incident-button" onClick={handelOpenModal}> + NEW INCIDENT</button>
                 </div>
-                <IncidentsTable incidents={incidents}/>
+                <IncidentsTable incidents={incidents} />
             </div>
             {
                 openModal && (
-                    <ModalCreate modalTitle='Create Incident' onClose={handelOnClose} service={service}/>
+                    <ModalCreate modalTitle='Create Incident' onClose={handelOnClose} service={service} />
                 )
             }
         </>
