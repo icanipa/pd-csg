@@ -14,7 +14,7 @@ const ServicePage = () => {
         if(!service){
             dispatch(fetchServiceData(id))
         }
-    },[])
+    },[service])
     return(
         <>
             <Service service={service}/>

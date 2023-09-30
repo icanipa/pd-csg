@@ -9,7 +9,8 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { fetchUpdateData } from "../../reducers/incidents/incidents.actions";
 import { selectUpdate } from "../../reducers/incidents/incidents.selectors";
 import { setUpdateIncident } from "../../reducers/incidents/incidents.actions";
-import { fetchServiceData } from "../../reducers/services/services.actions";
+import { fetchIncidentsData } from "../../reducers/incidents/incidents.actions";
+
 
 interface Props {
     modalTitle: string
@@ -29,7 +30,7 @@ const ModalUpdate = ({ update, modalTitle, onClose, incident }: Props) => {
         if (isUpdated) {
             alert("Incident Update Correct")
             dispatch(setUpdateIncident(false))
-            dispatch(fetchServiceData(serviceParams.id))
+            dispatch(fetchIncidentsData(serviceParams.id))
             onClose();
         }
     }, [isUpdated])

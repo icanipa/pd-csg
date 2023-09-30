@@ -15,7 +15,7 @@ const Service = ({ service }: Props) => {
     const [openModal, setOpenModal] = useState(false)
     const dispatch = useAppDispatch();
     const incidents = useAppSelector(selectIncidents)
-    const id = service && service.id
+    const id = service && service?.id
 
     const handelOnClose = () => {
         setOpenModal(false)
@@ -24,14 +24,14 @@ const Service = ({ service }: Props) => {
         setOpenModal(true)
     }
     useEffect(() => {
-        if (id) {
+        if(id){
             dispatch(fetchIncidentsData(id))
         }
     }, [id])
     return (
         <>
             <div className="service-container">
-                <h2>{`Service: ${service ? service.name : ''}`}</h2>
+                <h2>{`Service: ${service?.name}`}</h2>
                 <p>{service?.description}</p>
                 <p><strong>Id: </strong>{service?.id}</p>
                 <p><strong>Status: </strong>{service?.status}</p>
