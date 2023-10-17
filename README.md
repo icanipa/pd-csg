@@ -59,6 +59,11 @@ cd pd_front
 pnpm run dev
 ```
 
+* Once back and frond are up and running, entre url to verify is working.
+```
+http://127.0.0.1:6969/
+```
+
 ### Run back-end test
 
 * To run backend test just run this command in pd-csg
