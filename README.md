@@ -32,6 +32,7 @@ pip install -r requirements.txt
 ```
 
 ### Installing front-end
+
 * install all node packages
 ```
 cd pd_front
@@ -39,6 +40,7 @@ pnpm i
 ```
 
 ### Migrate PagerDuty 
+
 *  Migrate all services from `pdt-rcaicedopd` instance to `ignacios` instance in pd-csg
 ```
 python migrate.py
@@ -56,11 +58,14 @@ python pd_back/app.py
 cd pd_front
 pnpm run dev
 ```
+
 ### Run back-end test
+
 * To run backend test just run this command in pd-csg
 ```
 pytest
 ```
+
 ## Help
 
 Any advise for common problems or issues.
