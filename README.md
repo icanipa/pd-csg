@@ -56,7 +56,11 @@ python pd_back/app.py
 cd pd_front
 pnpm run dev
 ```
-
+### Run back-end test
+* To run backend test just run this command in pd-csg
+```
+pytest
+```
 ## Help
 
 Any advise for common problems or issues.
